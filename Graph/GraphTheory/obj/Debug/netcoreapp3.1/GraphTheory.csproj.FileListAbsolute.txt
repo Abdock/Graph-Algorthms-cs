@@ -1,0 +1,13 @@
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\bin\Debug\netcoreapp3.1\GraphTheory.exe
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\bin\Debug\netcoreapp3.1\GraphTheory.deps.json
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\bin\Debug\netcoreapp3.1\GraphTheory.runtimeconfig.json
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\bin\Debug\netcoreapp3.1\GraphTheory.runtimeconfig.dev.json
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\bin\Debug\netcoreapp3.1\GraphTheory.dll
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\bin\Debug\netcoreapp3.1\GraphTheory.pdb
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.csprojAssemblyReference.cache
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.AssemblyInfoInputs.cache
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.AssemblyInfo.cs
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.csproj.CoreCompileInputs.cache
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.dll
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.pdb
+C:\Users\Abdusattar\RiderProjects\Graph\GraphTheory\obj\Debug\netcoreapp3.1\GraphTheory.genruntimeconfig.cache

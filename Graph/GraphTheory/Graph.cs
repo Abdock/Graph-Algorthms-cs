@@ -6,114 +6,123 @@ namespace GraphTheory
 {
     public class Graph
     {
-        private class Pair
-        {
-            public int First;
-            public int Second;
+        private readonly Dictionary<int, Vertex> _graph;
 
-            public Pair(int first, int second)
-            {
-                First = first;
-                Second = second;
-            }
-        }
-        
-        private Dictionary<int, List<Pair>> _graph;
-        public Dictionary<int, int> Degrees { get; }
+        public List<Vertex> Vertices { get; }
         public bool Oriented { get; }
         public bool Weighted { get; }
 
         public Graph(bool oriented, bool weighted)
         {
+            Vertices = new List<Vertex>();
             Oriented = oriented;
             Weighted = weighted;
-            _graph = new Dictionary<int, List<Pair>>();
-            Degrees = new Dictionary<int, int>();
+            _graph = new Dictionary<int, Vertex>();
         }
 
-        public Graph(int m, bool oriented, bool weighted) : this(oriented, weighted)
+        public Graph(bool oriented, bool weighted, params Edge[] edges) : this(oriented, weighted)
         {
-            int u, v, w = 1;
-            for (int i = 0; i < m; ++i)
+            int w = 1;
+            for (int i = 0; i < edges.Length; ++i)
             {
-                string[] input = Console.ReadLine().Split(' ');
-                u = int.Parse(input[0]);
-                v = int.Parse(input[1]);
+                Vertices.Add(edges[i].From);
+                Vertices.Add(edges[i].To);
+                int u = edges[i].From.GetHashCode();
+                int v = edges[i].To.GetHashCode();
                 if (weighted)
                 {
-                    w = int.Parse(input[2]);
+                    w = edges[i].Weight;
                 }
                 if (!_graph.ContainsKey(u))
                 {
-                    _graph[u] = new List<Pair>();
-                    Degrees[u] = 0;
+                    _graph[u] = edges[i].From;
                 }
-                _graph[u].Add(new Pair(v, w));
-                ++Degrees[u];
+
+                if (!_graph.ContainsKey(v))
+                {
+                    _graph[v] = edges[i].To;
+                }
+                _graph[u].Neighbours[_graph[v]] = w;
+                ++_graph[u].OutDegree;
+                ++_graph[v].InDegree;
+                
                 if (!Oriented)
                 {
-                    if (!_graph.ContainsKey(v))
-                    {
-                        _graph[v] = new List<Pair>();
-                        Degrees[v] = 0;
-                    }
-                    _graph[v].Add(new Pair(u, w));
-                    ++Degrees[v];
+                    _graph[v].Neighbours[_graph[u]] = w;
+                    ++_graph[v].OutDegree;
+                    ++_graph[u].InDegree;
                 }
             }
         }
 
-        public void AddEdge(int from, int to, int weight = 1)
+        public void AddEdge(Vertex from, Vertex to, int weight = 1)
         {
-            if (!_graph.ContainsKey(from))
+            int u = from.Name.GetHashCode();
+            int v = from.Name.GetHashCode();
+            if (!_graph.ContainsKey(u))
             {
-                _graph[from] = new List<Pair>();
-                Degrees[from] = 0;
+                _graph[u] = from;
             }
-
+            if (!_graph.ContainsKey(v))
+            {
+                _graph[v] = to;
+            }
             if (!Weighted)
             {
                 weight = 1;
             }
-            _graph[from].Add(new Pair(to, weight));
-            ++Degrees[from];
+            _graph[u].Neighbours[to] = weight;
+            ++_graph[u].OutDegree;
+            ++_graph[v].InDegree;
             if (!Oriented)
             {
-                if (!_graph.ContainsKey(to))
-                {
-                    _graph[to] = new List<Pair>();
-                    Degrees[to] = 0;
-                }
-                _graph[to].Add(new Pair(from, weight));
-                ++Degrees[to];
+                _graph[v].Neighbours[from] = weight;
+                ++_graph[v].OutDegree;
+                ++_graph[u].InDegree;
             }
         }
 
-        public void DFS(int vertex)
+        public void AddEdge(string from, string to, int weight)
+        {
+            AddEdge(new Vertex(from), new Vertex(to), weight);
+        }
+
+        public void DFS(Vertex vertex, Delegate preprocess, Delegate inPreLoop, Delegate inPostLoop, Delegate postprocess)
+        {
+            DFS(vertex.Name, preprocess, inPreLoop, inPostLoop, postprocess);
+        }
+
+        public void DFS(string vertex, Delegate preprocess, Delegate inPreLoop, Delegate inPostLoop,
+            Delegate postprocess)
         {
             HashSet<int> was = new HashSet<int>();
-            DFS(vertex, was);
+            DFS(vertex.GetHashCode(), was, preprocess, inPreLoop, inPostLoop, postprocess);
         }
 
-        private void DFS(int vertex, HashSet<int> was)
+        private void DFS(int vertex, HashSet<int> was, Delegate pre, Delegate inPreLoop, Delegate inPostLoop, Delegate post)
         {
             was.Add(vertex);
-            if (!_graph.ContainsKey(vertex))
+            pre.DynamicInvoke(vertex, was);
+            foreach (var currentVertex in _graph[vertex].Neighbours)
             {
-                return;
-            }
-            for (int i = 0; i < _graph[vertex].Count; ++i)
-            {
-                if (_graph.ContainsKey(_graph[vertex][i].First) && !was.Contains(_graph[vertex][i].First))
+                if (!was.Contains(currentVertex.Key.Name.GetHashCode()))
                 {
-                    DFS(_graph[vertex][i].First, was);
+                    inPreLoop.DynamicInvoke(vertex, was, currentVertex.Key, currentVertex.Value);
+                    DFS(currentVertex.Key.Name.GetHashCode(), was, pre, inPreLoop, inPostLoop, post);
+                    inPostLoop.DynamicInvoke(vertex, was, currentVertex.Key, currentVertex.Value);
                 }
             }
+            post.DynamicInvoke(vertex, was);
         }
 
-        public Dictionary<int, int> ShortestPathFromVertex(int vertex)
+        public Dictionary<int, int> ShortestPathFromVertex(Vertex vertex)
         {
-            return Weighted ? Dijkstra(vertex) : BFS(vertex);
+            return ShortestPathFromVertex(vertex.Name);
+        }
+
+        public Dictionary<int, int> ShortestPathFromVertex(string vertex)
+        {
+            return Weighted ? Dijkstra(vertex.GetHashCode()) : BFS(vertex.GetHashCode());
         }
 
         private Dictionary<int, int> BFS(int start)
@@ -129,9 +138,9 @@ namespace GraphTheory
             while (queue.Count > 0)
             {
                 int current = queue.Dequeue();
-                for (int i = 0; i < _graph[current].Count; ++i)
+                foreach(var vertex in _graph[current].Neighbours)
                 {
-                    int to = _graph[current][i].First;
+                    int to = vertex.Key.Name.GetHashCode();
                     if (!was.Contains(to))
                     {
                         was.Add(to);
@@ -161,9 +170,9 @@ namespace GraphTheory
                     continue;
                 }
 
-                for (int i = 0; i < _graph[vertex].Count; ++i)
+                foreach (var next in _graph[vertex].Neighbours)
                 {
-                    int to = _graph[vertex][i].First, length = _graph[vertex][i].Second;
+                    int to = next.Key.Name.GetHashCode(), length = next.Value;
                     if (!distances.ContainsKey(to) || distances[to] > distance + length)
                     {
                         distances[to] = distance + length;

@@ -115,6 +115,52 @@ namespace GraphTheory
             post.DynamicInvoke(vertex, was);
         }
 
+        public Dictionary<Vertex, Dictionary<Vertex, int>> ShortestPathBetweenAllPairVertices()
+        {
+            var matrix = new Dictionary<Vertex, Dictionary<Vertex, int>>();
+            foreach (var vertex1 in Vertices)
+            {
+                foreach (var vertex2 in Vertices)
+                {
+                    try
+                    {
+                        matrix[vertex1][vertex2] = _graph[vertex1.Name.GetHashCode()].Neighbours[vertex2];
+                    }
+                    catch (NullReferenceException exception)
+                    {
+                        matrix[vertex1][vertex2] = int.MaxValue;
+                    }
+                }
+            }
+
+            foreach (var vertex in Vertices)
+            {
+                foreach (var vertex1 in Vertices)
+                {
+                    foreach (var vertex2 in Vertices)
+                    {
+                        if (matrix[vertex1][vertex] < int.MaxValue && matrix[vertex][vertex2] < int.MaxValue)
+                        {
+                            matrix[vertex1][vertex2] = Math.Min(matrix[vertex1][vertex2], matrix[vertex1][vertex] + matrix[vertex][vertex2]);
+                        }
+                        else
+                        {
+                            matrix[vertex1].Remove(vertex2);
+                        }
+                    }
+                }
+            }
+
+            foreach (var (key, _) in matrix)
+            {
+                if (matrix[key].Count == 0)
+                {
+                    matrix.Remove(key);
+                }
+            }
+            return matrix;
+        }
+
         public Dictionary<int, int> ShortestPathFromVertex(Vertex vertex)
         {
             return ShortestPathFromVertex(vertex.Name);

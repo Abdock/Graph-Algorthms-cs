@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\GraphTheory.csproj": {}
+    "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\GraphTheory.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\GraphTheory.csproj": {
+    "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\GraphTheory.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\GraphTheory.csproj",
+        "projectUniqueName": "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\GraphTheory.csproj",
         "projectName": "GraphTheory",
-        "projectPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\GraphTheory.csproj",
+        "projectPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\GraphTheory.csproj",
         "packagesPath": "C:\\Users\\Abdusattar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\obj\\",
+        "outputPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Abdusattar\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\GraphTheory.csproj",
+    "projectUniqueName": "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\GraphTheory.csproj",
     "projectName": "GraphTheory",
-    "projectPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\GraphTheory.csproj",
-    "outputPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph\\GraphTheory\\obj\\",
+    "projectPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\GraphTheory.csproj",
+    "outputPath": "C:\\Users\\Abdusattar\\RiderProjects\\Graph-Algorthms-cs\\Graph\\GraphTheory\\obj\\",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.1"
